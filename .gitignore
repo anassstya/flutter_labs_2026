@@ -22,7 +22,8 @@ bin/
 /dist/
 /nbdist/
 /.nb-gradle/
-
+.dart_tool
+.idea
 ### VS Code ###
 .vscode/
 
