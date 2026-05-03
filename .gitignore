@@ -29,3 +29,12 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+
+# Flutter generated files
+**/build/
+**/.dart_tool/
+*.iml
+
+**/build/
+**/.dart_tool/
+*.iml
