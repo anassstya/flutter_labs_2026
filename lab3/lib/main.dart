@@ -25,18 +25,60 @@ class MatchesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Column(
-          children: [
-            _buildHeader(),
-            _buildStatsSection(),
-            _buildYourMatchesHeader(),
-            Expanded(
-              child: _buildMatchesGrid(),
+      body: Stack(
+        children: [
+          CustomScrollView(
+            physics: const BouncingScrollPhysics(),
+            slivers: [
+              const SliverToBoxAdapter(
+                child: SizedBox(height: 110),
+              ),
+
+              SliverToBoxAdapter(
+                child: _buildStatsSection(),
+              ),
+
+              SliverToBoxAdapter(
+                child: _buildYourMatchesHeader(),
+              ),
+
+              SliverPadding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                sliver: SliverGrid(
+                  delegate: SliverChildBuilderDelegate(
+                        (context, index) {
+                      return _buildMatchCard(context, matches[index]);
+                    },
+                    childCount: matches.length,
+                  ),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 16,
+                    crossAxisSpacing: 16,
+                    childAspectRatio: 0.65,
+                  ),
+                ),
+              ),
+
+              const SliverToBoxAdapter(
+                child: SizedBox(height: 130),
+              ),
+            ],
+          ),
+
+          SafeArea(
+            child: Column(
+              children: [
+                _buildHeader(),
+                const Spacer(),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 16),
+                  child: _buildBottomNav(),
+                ),
+              ],
             ),
-            _buildBottomNav(),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -89,7 +131,6 @@ class MatchesScreen extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 20),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           _buildStatItem(
             iconImage: 'assets/heart.png',
@@ -167,7 +208,7 @@ class MatchesScreen extends StatelessWidget {
               TextSpan(
                 text: count,
                 style: const TextStyle(
-                  color: const Color(0xFFDD88CF),
+                  color: Color(0xFFDD88CF),
                   fontWeight: FontWeight.w700,
                   fontSize: 15,
                 ),
@@ -180,11 +221,11 @@ class MatchesScreen extends StatelessWidget {
   }
 
   Widget _buildYourMatchesHeader() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12),
+    return const Padding(
+      padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 12),
       child: Row(
         children: [
-          const Text(
+          Text(
             'Your Matches',
             style: TextStyle(
               fontSize: 24,
@@ -192,8 +233,8 @@ class MatchesScreen extends StatelessWidget {
               color: Color(0xFF4A2C5A),
             ),
           ),
-          const SizedBox(width: 8),
-          const Text(
+          SizedBox(width: 8),
+          Text(
             '47',
             style: TextStyle(
               fontSize: 24,
@@ -206,29 +247,15 @@ class MatchesScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildMatchesGrid() {
-    return GridView.builder(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        mainAxisSpacing: 16,
-        crossAxisSpacing: 16,
-        childAspectRatio: 0.65,
-      ),
-      itemCount: matches.length,
-      itemBuilder: (context, index) {
-        return _buildMatchCard(context, matches[index]);
-      },
-    );
-  }
-
   Widget _buildMatchCard(BuildContext context, Map<String, dynamic> match) {
     return GestureDetector(
       onTap: () {
         if (match['name'] == 'Alfredo') {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (_) => const AlfredoProfileScreen()),
+            MaterialPageRoute(
+              builder: (_) => const AlfredoProfileScreen(),
+            ),
           );
         }
       },
@@ -236,12 +263,12 @@ class MatchesScreen extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(24),
           border: Border.all(
-            color: Color(0xFFDD88CF),
+            color: const Color(0xFFDD88CF),
             width: 5,
           ),
         ),
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(21),
+          borderRadius: BorderRadius.circular(18),
           child: Stack(
             children: [
               Positioned.fill(
@@ -253,14 +280,18 @@ class MatchesScreen extends StatelessWidget {
                   },
                 ),
               ),
+
               Positioned(
                 top: 0,
                 left: 40,
                 right: 40,
                 child: Container(
-                  padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 6,
+                    horizontal: 12,
+                  ),
                   decoration: BoxDecoration(
-                    color: Color(0xFFDD88CF),
+                    color: const Color(0xFFDD88CF),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Text(
@@ -274,13 +305,17 @@ class MatchesScreen extends StatelessWidget {
                   ),
                 ),
               ),
+
               Positioned(
                 left: 0,
                 right: 0,
                 bottom: 90,
                 child: Center(
                   child: Container(
-                    padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 6,
+                      horizontal: 12,
+                    ),
                     decoration: BoxDecoration(
                       color: Colors.black.withOpacity(0.2),
                       borderRadius: BorderRadius.circular(8),
@@ -299,12 +334,12 @@ class MatchesScreen extends StatelessWidget {
                   ),
                 ),
               ),
+
               Positioned(
                 bottom: 20,
                 left: 12,
                 right: 12,
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -353,7 +388,7 @@ class MatchesScreen extends StatelessWidget {
 
   Widget _buildBottomNav() {
     return Container(
-      margin: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+      margin: const EdgeInsets.symmetric(horizontal: 16),
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -372,10 +407,11 @@ class MatchesScreen extends StatelessWidget {
           _buildNavItem(Icons.home_outlined, false),
           _buildNavItem(Icons.explore_outlined, false),
           _buildNavItem(Icons.add, false),
+
           Container(
             width: 48,
             height: 48,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: Color(0xFFDD88CF),
               shape: BoxShape.circle,
             ),
@@ -385,25 +421,33 @@ class MatchesScreen extends StatelessWidget {
               size: 28,
             ),
           ),
+
           _buildNavItem(Icons.chat_bubble_outline, false),
         ],
       ),
     );
   }
 
-  Widget _buildNavItem(IconData icon, bool isActive, {Color? activeColor}) {
+  Widget _buildNavItem(
+      IconData icon,
+      bool isActive, {
+        Color? activeColor,
+      }) {
     return Container(
       width: 55,
       height: 48,
       decoration: isActive
           ? BoxDecoration(
-        color: (activeColor ?? const Color(0xFFC471F5)).withOpacity(0.15),
+        color: (activeColor ?? const Color(0xFFC471F5))
+            .withOpacity(0.15),
         shape: BoxShape.circle,
       )
           : null,
       child: Icon(
         icon,
-        color: isActive ? (activeColor ?? const Color(0xFFC471F5)) : const Color(0xFF9B9B9B),
+        color: isActive
+            ? (activeColor ?? const Color(0xFFC471F5))
+            : const Color(0xFF9B9B9B),
         size: 24,
       ),
     );
@@ -430,7 +474,10 @@ class AlfredoProfileScreen extends StatelessWidget {
 
           SafeArea(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 16.0,
+                vertical: 10,
+              ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -444,89 +491,114 @@ class AlfredoProfileScreen extends StatelessWidget {
             ),
           ),
 
-          Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Text(
-                  'Alfredo Calzoni, 20',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 28,
-                    fontWeight: FontWeight.bold,
-                    shadows: [Shadow(blurRadius: 8, color: Colors.black26)],
+          DraggableScrollableSheet(
+            initialChildSize: 0.42,
+            minChildSize: 0.35,
+            maxChildSize: 0.75,
+            builder: (context, controller) {
+              return Container(
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.vertical(
+                    top: Radius.circular(32),
                   ),
                 ),
-                const SizedBox(height: 8),
-                const Text(
-                  'HAMBURG, GERMANY',
-                  style: TextStyle(
-                    color: Colors.white70,
-                    fontSize: 14,
-                    letterSpacing: 1.2,
-                  ),
-                ),
-                const SizedBox(height: 24),
-                _buildMatchButton(),
-              ],
-            ),
-          ),
-
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Container(
-              width: double.infinity,
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.vertical(top: Radius.circular(32)),
-              ),
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.fromLTRB(20, 20, 20, 110),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      width: 40,
-                      height: 4,
-                      decoration: BoxDecoration(
-                        color: Colors.grey[300],
-                        borderRadius: BorderRadius.circular(2),
+                child: SingleChildScrollView(
+                  controller: controller,
+                  padding: const EdgeInsets.fromLTRB(20, 20, 20, 120),
+                  physics: const BouncingScrollPhysics(),
+                  child: Column(
+                    children: [
+                      Container(
+                        width: 40,
+                        height: 4,
+                        decoration: BoxDecoration(
+                          color: Colors.grey[300],
+                          borderRadius: BorderRadius.circular(2),
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 24),
 
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: const Text('About', style: TextStyle(color: Colors.grey, fontSize: 16)),
-                    ),
-                    const SizedBox(height: 8),
-                    const Text(
-                      'A good listener. I love having a good talk to know each other\'s side 😍.',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 16, height: 1.4),
-                    ),
-                    const SizedBox(height: 24),
+                      const SizedBox(height: 24),
 
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: const Text('Interest', style: TextStyle(color: Colors.grey, fontSize: 16)),
-                    ),
-                    const SizedBox(height: 12),
-                    Wrap(
-                      alignment: WrapAlignment.center,
-                      spacing: 10,
-                      runSpacing: 10,
-                      children: [
-                        _buildTag('🌿 Nature'),
-                        _buildTag('🏝️ Travel'),
-                        _buildTag('✍️ Writing'),
-                        _buildTag('😊 Pe'),
-                      ],
-                    ),
-                  ],
+                      const Text(
+                        'Alfredo Calzoni, 20',
+                        style: TextStyle(
+                          fontSize: 28,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+
+                      const SizedBox(height: 8),
+
+                      const Text(
+                        'HAMBURG, GERMANY',
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: 14,
+                          letterSpacing: 1.2,
+                        ),
+                      ),
+
+                      const SizedBox(height: 24),
+
+                      _buildMatchButton(),
+
+                      const SizedBox(height: 32),
+
+                      const Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          'About',
+                          style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+
+                      const SizedBox(height: 8),
+
+                      const Text(
+                        'A good listener. I love having a good talk to know each other\'s side 😍.',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 16,
+                          height: 1.4,
+                        ),
+                      ),
+
+                      const SizedBox(height: 24),
+
+                      const Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          'Interest',
+                          style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+
+                      const SizedBox(height: 12),
+
+                      Wrap(
+                        alignment: WrapAlignment.center,
+                        spacing: 10,
+                        runSpacing: 10,
+                        children: [
+                          _buildTag('🌿 Nature'),
+                          _buildTag('🏝️ Travel'),
+                          _buildTag('✍️ Writing'),
+                          _buildTag('😊 Pets'),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ),
+              );
+            },
           ),
 
           Positioned(
@@ -536,11 +608,27 @@ class AlfredoProfileScreen extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                _buildActionButton(Icons.close, Colors.grey.shade600, Colors.white),
+                _buildActionButton(
+                  Icons.close,
+                  Colors.grey.shade600,
+                  Colors.white,
+                ),
+
                 const SizedBox(width: 24),
-                _buildActionButton(Icons.star, Colors.white, const Color(0xFF4A148C)),
+
+                _buildActionButton(
+                  Icons.star,
+                  Colors.white,
+                  const Color(0xFF4A148C),
+                ),
+
                 const SizedBox(width: 24),
-                _buildActionButton(Icons.favorite, Colors.white, Colors.pink.shade300),
+
+                _buildActionButton(
+                  Icons.favorite,
+                  Colors.white,
+                  Colors.pink.shade300,
+                ),
               ],
             ),
           ),
@@ -553,7 +641,10 @@ class AlfredoProfileScreen extends StatelessWidget {
     return Container(
       width: 40,
       height: 40,
-      decoration: BoxDecoration(shape: BoxShape.circle, border: Border.all(color: color)),
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        border: Border.all(color: color),
+      ),
       child: Icon(icon, color: color, size: 20),
     );
   }
@@ -567,10 +658,21 @@ class AlfredoProfileScreen extends StatelessWidget {
         border: Border.all(color: Colors.white),
       ),
       child: const Row(
+        mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(Icons.location_on_outlined, color: Colors.white, size: 16),
+          Icon(
+            Icons.location_on_outlined,
+            color: Colors.white,
+            size: 16,
+          ),
           SizedBox(width: 4),
-          Text('2.5 km', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+          Text(
+            '2.5 km',
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
         ],
       ),
     );
@@ -582,7 +684,10 @@ class AlfredoProfileScreen extends StatelessWidget {
       decoration: BoxDecoration(
         color: const Color(0xFF7B1FA2),
         borderRadius: BorderRadius.circular(30),
-        border: Border.all(color: Colors.pink.shade200, width: 1.5),
+        border: Border.all(
+          color: Colors.pink.shade200,
+          width: 1.5,
+        ),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -599,12 +704,26 @@ class AlfredoProfileScreen extends StatelessWidget {
                   backgroundColor: Colors.white.withOpacity(0.3),
                   strokeWidth: 3,
                 ),
-                const Text('80%', style: TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold)),
+                const Text(
+                  '80%',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 10,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ],
             ),
           ),
           const SizedBox(width: 12),
-          const Text('Match', style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold)),
+          const Text(
+            'Match',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
           const SizedBox(width: 12),
         ],
       ),
@@ -613,16 +732,26 @@ class AlfredoProfileScreen extends StatelessWidget {
 
   Widget _buildTag(String text) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      padding: const EdgeInsets.symmetric(
+        horizontal: 16,
+        vertical: 8,
+      ),
       decoration: BoxDecoration(
         border: Border.all(color: Colors.grey.shade300),
         borderRadius: BorderRadius.circular(20),
       ),
-      child: Text(text, style: const TextStyle(fontSize: 14)),
+      child: Text(
+        text,
+        style: const TextStyle(fontSize: 14),
+      ),
     );
   }
 
-  Widget _buildActionButton(IconData icon, Color iconColor, Color bgColor) {
+  Widget _buildActionButton(
+      IconData icon,
+      Color iconColor,
+      Color bgColor,
+      ) {
     return Container(
       width: 56,
       height: 56,
@@ -630,10 +759,18 @@ class AlfredoProfileScreen extends StatelessWidget {
         shape: BoxShape.circle,
         color: bgColor,
         boxShadow: [
-          BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 8, offset: const Offset(0, 4))
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            blurRadius: 8,
+            offset: const Offset(0, 4),
+          )
         ],
       ),
-      child: Icon(icon, color: iconColor, size: 28),
+      child: Icon(
+        icon,
+        color: iconColor,
+        size: 28,
+      ),
     );
   }
 }
@@ -676,3 +813,4 @@ final List<Map<String, dynamic>> matches = [
     'image': 'assets/alfredo.png',
   },
 ];
+
