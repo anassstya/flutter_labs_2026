@@ -23,6 +23,7 @@ class MainScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         selectedItemColor: Colors.blue,
@@ -33,222 +34,242 @@ class MainScreen extends StatelessWidget {
           BottomNavigationBarItem(icon: Icon(Icons.home_outlined), label: ''),
           BottomNavigationBarItem(icon: Icon(Icons.favorite_border), label: ''),
           BottomNavigationBarItem(icon: Icon(Icons.list_alt), label: ''),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.shopping_bag_outlined), label: ''),
+          BottomNavigationBarItem(icon: Icon(Icons.shopping_bag_outlined), label: ''),
           BottomNavigationBarItem(icon: Icon(Icons.person_outline), label: ''),
         ],
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(20, 50, 20, 20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
 
-              Row(
-                children: [
-                  Container(
-                    height: 50,
-                    width: 50,
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      image: DecorationImage(
-                        image: AssetImage('assets/avatar.png'),
-                        fit: BoxFit.cover,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+
+                Row(
+                  children: [
+                    Container(
+                      height: 50,
+                      width: 50,
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                          image: AssetImage('assets/avatar.png'),
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
-                  ),
-                  const SizedBox(width: 18),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 24, vertical: 12),
-                    decoration: BoxDecoration(
-                      color: const Color(0xFF004CFF),
-                      borderRadius: BorderRadius.circular(25),
-                    ),
-                    child: const Text(
-                      'My Activity',
-                      style: TextStyle(
+                    const SizedBox(width: 18),
+
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFF004CFF),
+                        borderRadius: BorderRadius.circular(25),
+                      ),
+                      child: const Text(
+                        'My Activity',
+                        style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.w500,
-                          fontSize: 18),
-                    ),
-                  ),
-                  const Spacer(),
-                  Container(
-                    height: 44,
-                    width: 44,
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      image: DecorationImage(
-                        image: AssetImage('assets/Vouchers.png'),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  Stack(
-                    clipBehavior: Clip.none,
-                    children: [
-                      Container(
-                        height: 44,
-                        width: 44,
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                          image: DecorationImage(
-                            image: AssetImage('assets/menu.png'),
-                            fit: BoxFit.cover,
-                          ),
+                          fontSize: 18,
                         ),
                       ),
-                      Positioned(
-                        right: 0,
-                        top: -1,
-                        child: Container(
-                          height: 14,
-                          width: 14,
+                    ),
+
+                    const Spacer(),
+
+                    Container(
+                      height: 44,
+                      width: 44,
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                          image: AssetImage('assets/Vouchers.png'),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+
+                    const SizedBox(width: 8),
+
+                    Stack(
+                      clipBehavior: Clip.none,
+                      children: [
+                        Container(
+                          height: 44,
+                          width: 44,
                           decoration: const BoxDecoration(
-                            color: Color(0xFF004CFF),
                             shape: BoxShape.circle,
+                            image: DecorationImage(
+                              image: AssetImage('assets/menu.png'),
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(width: 8),
-                  Container(
-                    height: 44,
-                    width: 44,
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      image: DecorationImage(
-                        image: AssetImage('assets/Settings.png'),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 24),
-
-              const Text(
-                'Hello, Amanda!',
-                style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 20),
-
-              Row(
-                children: [
-                  Container(
-                    height: 80,
-                    width: 80,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(
-                        color: const Color(0xFFD47676),
-                        width: 10,
-                      ),
-                      color: Colors.white,
-                    ),
-                    child: Image.asset(
-                      'assets/shopping_bag.png',
-                      width: 35,
-                      height: 35,
-                      color: const Color(0xFFD47676),
-                    ),
-                  ),
-                  const SizedBox(width: 16),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: const [
-                        Text(
-                          'Your voucher will expire in 3 days',
-                          style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.w700),
-                        ),
-                        SizedBox(height: 4),
-                        Text(
-                          'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt',
-                          style: TextStyle(fontSize: 13, color: Colors.grey),
+                        Positioned(
+                          right: 0,
+                          top: -1,
+                          child: Container(
+                            height: 14,
+                            width: 14,
+                            decoration: const BoxDecoration(
+                              color: Color(0xFF004CFF),
+                              shape: BoxShape.circle,
+                            ),
+                          ),
                         ),
                       ],
                     ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 24),
 
-              const Text(
-                'Recently viewed',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 12),
-              SizedBox(
-                height: 90,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: [
-                    _buildCircularImage('assets/item1.png'),
-                    _buildCircularImage('assets/item2.png'),
-                    _buildCircularImage('assets/item3.png'),
-                    _buildCircularImage('assets/item4.png'),
-                    _buildCircularImage('assets/item5.png'),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 24),
+                    const SizedBox(width: 8),
 
-              const Text(
-                'My Orders',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 12),
-              Row(
-                children: [
-                  _buildOrderButton('To Pay'),
-                  const SizedBox(width: 16),
-                  Stack(
-                    children: [
-                      _buildOrderButton('To Recieve'),
-                      Positioned(
-                        right: 8,
-                        top: 8,
-                        child: Container(
-                          height: 12,
-                          width: 12,
-                          decoration: const BoxDecoration(
-                            color: Colors.green,
-                            shape: BoxShape.circle,
-                          ),
+                    Container(
+                      height: 44,
+                      width: 44,
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                          image: AssetImage('assets/Settings.png'),
+                          fit: BoxFit.cover,
                         ),
                       ),
-                    ],
-                  ),
-                  const SizedBox(width: 16),
-                  _buildOrderButton('To Review'),
-                ],
-              ),
-              const SizedBox(height: 24),
-
-              const Text(
-                'Stories',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 12),
-              SizedBox(
-                height: 280,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: [
-                    _buildStoryCard('assets/story1.png', isLive: true),
-                    _buildStoryCard('assets/story2.png'),
-                    _buildStoryCard('assets/story3.png'),
-                    _buildStoryCard('assets/strory4.png'),
+                    ),
                   ],
                 ),
-              ),
-            ],
+
+                const SizedBox(height: 24),
+
+                const Text(
+                  'Hello, Amanda!',
+                  style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+                ),
+
+                const SizedBox(height: 20),
+
+                Row(
+                  children: [
+                    Container(
+                      height: 80,
+                      width: 80,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                          color: const Color(0xFFD47676),
+                          width: 10,
+                        ),
+                      ),
+                      child: const Icon(Icons.shopping_bag,
+                          color: Color(0xFFD47676)),
+                    ),
+
+                    const SizedBox(width: 16),
+
+                    const Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Your voucher will expire in 3 days',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                          SizedBox(height: 4),
+                          Text(
+                            'Lorem ipsum dolor sit amet...',
+                            style: TextStyle(fontSize: 13, color: Colors.grey),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+
+                const SizedBox(height: 24),
+
+                const Text(
+                  'Recently viewed',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+
+                const SizedBox(height: 12),
+
+                SizedBox(
+                  height: 90,
+                  child: ListView(
+                    scrollDirection: Axis.horizontal,
+                    children: [
+                      _buildCircularImage('assets/item1.png'),
+                      _buildCircularImage('assets/item2.png'),
+                      _buildCircularImage('assets/item3.png'),
+                      _buildCircularImage('assets/item4.png'),
+                      _buildCircularImage('assets/item5.png'),
+                    ],
+                  ),
+                ),
+
+                const SizedBox(height: 24),
+
+                const Text(
+                  'My Orders',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+
+                const SizedBox(height: 12),
+
+                Wrap(
+                  spacing: 12,
+                  runSpacing: 12,
+                  children: [
+                    _buildOrderButton('To Pay'),
+                    Stack(
+                      children: [
+                        _buildOrderButton('To Recieve'),
+                        Positioned(
+                          right: 8,
+                          top: 8,
+                          child: Container(
+                            height: 12,
+                            width: 12,
+                            decoration: const BoxDecoration(
+                              color: Colors.green,
+                              shape: BoxShape.circle,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    _buildOrderButton('To Review'),
+                  ],
+                ),
+
+                const SizedBox(height: 24),
+
+                const Text(
+                  'Stories',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+
+                const SizedBox(height: 12),
+
+                SizedBox(
+                  height: 280,
+                  child: ListView(
+                    scrollDirection: Axis.horizontal,
+                    children: [
+                      _buildStoryCard('assets/story1.png', isLive: true),
+                      _buildStoryCard('assets/story2.png'),
+                      _buildStoryCard('assets/story3.png'),
+                      _buildStoryCard('assets/strory4.png'),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -266,10 +287,7 @@ class MainScreen extends StatelessWidget {
           border: Border.all(color: Colors.grey.withOpacity(0.3), width: 2),
         ),
         child: ClipOval(
-          child: Image.asset(
-            imagePath,
-            fit: BoxFit.cover,
-          ),
+          child: Image.asset(imagePath, fit: BoxFit.cover),
         ),
       ),
     );
@@ -285,7 +303,10 @@ class MainScreen extends StatelessWidget {
       child: Text(
         text,
         style: const TextStyle(
-            color: Colors.blue, fontWeight: FontWeight.w500, fontSize: 17),
+          color: Colors.blue,
+          fontWeight: FontWeight.w500,
+          fontSize: 17,
+        ),
       ),
     );
   }
@@ -300,32 +321,15 @@ class MainScreen extends StatelessWidget {
             width: 200,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(16),
-              color: Colors.grey[300],
             ),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(16),
-              child: Image.asset(
-                imagePath,
-                fit: BoxFit.cover,
-              ),
+              child: Image.asset(imagePath, fit: BoxFit.cover),
             ),
           ),
-          Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
+          const Positioned(
             child: Center(
-              child: Container(
-                height: 50,
-                width: 50,
-                decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.3),
-                  shape: BoxShape.circle,
-                ),
-                child: const Icon(Icons.play_arrow,
-                    color: Colors.white, size: 30),
-              ),
+              child: Icon(Icons.play_arrow, color: Colors.white, size: 30),
             ),
           ),
           if (isLive)
@@ -333,16 +337,14 @@ class MainScreen extends StatelessWidget {
               top: 12,
               left: 12,
               child: Container(
-                padding:
-                const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
                 decoration: BoxDecoration(
                   color: Colors.green,
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: const Text(
                   'Live',
-                  style: TextStyle(
-                      color: Colors.white, fontWeight: FontWeight.w500),
+                  style: TextStyle(color: Colors.white),
                 ),
               ),
             ),
